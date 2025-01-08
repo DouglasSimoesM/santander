@@ -7,6 +7,7 @@ import santander.service.UserService;
 
 
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -16,6 +17,11 @@ public class UserServiceImpl implements UserService {
 
     public UserServiceImpl(UserRepository userRepository){
         this.userRepository = userRepository;
+    }
+
+    @Override
+    public Iterable<User> buscarTodos() {
+        return userRepository.findAll();
     }
 
     @Override
@@ -30,4 +36,19 @@ public class UserServiceImpl implements UserService {
         }
         return userRepository.save(userToCreate);
     }
+
+    @Override
+    public void deletar(Long id) {
+        userRepository.deleteById(id);
+    }
+
+    @Override
+    public void atualizar(Long id, User user) {
+        Optional<User> userBd = userRepository.findById(id);
+        if (userBd.isPresent()){
+            userRepository.save(user);
+        }
+    }
+
+
 }

@@ -18,6 +18,11 @@ public class UserController {
         this.userService = userService;
     }
 
+    @GetMapping
+    public ResponseEntity<Iterable<User>> buscarTodos() {
+        return ResponseEntity.ok(userService.buscarTodos());
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<User> findById(@PathVariable Long id){
         var user = userService.findById(id);
@@ -33,4 +38,18 @@ public class UserController {
                 .toUri();
         return ResponseEntity.created(location).body(userCreate);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<User> atualizar(@PathVariable Long id, @RequestBody User user) {
+        userService.atualizar(id, user);
+        return ResponseEntity.ok(user);
+    }
+
+    @DeleteMapping("/id")
+    public ResponseEntity<Void> deletar(@PathVariable Long id){
+        userService.deletar(id);
+        return ResponseEntity.ok().build();
+    }
+
+
 }
