@@ -14,7 +14,8 @@ import java.net.URI;
 public class UserController {
 
     private final UserService userService;
-    public UserController(UserService userService){
+
+    public UserController(UserService userService) {
         this.userService = userService;
     }
 
@@ -24,13 +25,13 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> findById(@PathVariable Long id){
+    public ResponseEntity<User> findById(@PathVariable Long id) {
         var user = userService.findById(id);
         return ResponseEntity.ok(user);
     }
 
     @PostMapping("/{id}")
-    public ResponseEntity<User> create(@RequestBody User user){
+    public ResponseEntity<User> create(@RequestBody User user) {
         var userCreate = userService.create(user);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
@@ -45,11 +46,10 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
-    @DeleteMapping("/id")
-    public ResponseEntity<Void> deletar(@PathVariable Long id){
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletar(@PathVariable Long id) {
         userService.deletar(id);
         return ResponseEntity.ok().build();
     }
-
 
 }
